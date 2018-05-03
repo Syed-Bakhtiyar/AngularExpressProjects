@@ -32,7 +32,7 @@ const upload = multer({ storage: storage });
 
 app.post('/createUser', async (req, res)=>{
     try{
-        responseOfUser = await dbModule.createUser(req);
+        responseOfUser = await dbModule.createUser(req.body);
         return res.json(responseOfUser);
     }catch(e){
         return res.status(500).json('internal server error');
@@ -42,13 +42,48 @@ app.post('/createUser', async (req, res)=>{
 app.post('/createPost', upload.array('uploads'), async (req, res)=>{
     try{
         console.log('body start',req.body, req.files[0], 'bpody end');
-        fileMetadata = {
-                            'path': req.files[0]['path'],
-                            'name': req.files[0]['originalname']
-                       };
-        responseOfPicture = await dbModule.pictureMetadata(fileMetadata);
+        let responseOfPicture = 0;
+        if(req.files.length > 0){
+            const fileMetadata = {
+                'path': req.files[0]['path'],
+                'name': req.files[0]['originalname']
+           };
+           responseOfPicture = await dbModule.pictureMetadata(fileMetadata); 
+        }
         responseOfPost = await dbModule.createPosts(JSON.parse(req.body.post), responseOfPicture);
         res.status(200).json(responseOfPost);
+    }catch(e){
+        console.log(e);
+        res.status(500).json('internal server error');
+    }
+});
+
+app.post('/postComment', upload.array('uploads'), async (req, res)=>{
+    try{
+        console.log('body start',req.body, req.files[0], 'body end');
+        let responseOfPicture = 0;
+        if(req.files.length > 0){
+            const fileMetadata = {
+                'path': req.files[0]['path'],
+                'name': req.files[0]['originalname']
+           };
+           responseOfPicture = await dbModule.pictureMetadata(fileMetadata);
+        }
+        responseOfComments = await dbModule.postsComment(JSON.parse(req.body.comments), responseOfPicture);
+        res.status(200).json(responseOfComments);
+
+    }catch(e){
+        console.log(e);
+        res.status(500).json('internal server error');
+    }
+});
+
+app.post('/likes', async (req, res)=>{
+    try{
+        console.log('request' ,req.body);
+        likes = await dbModule.postLikes(JSON.parse(req.body.likes));
+        console.log(likes);
+        res.json(likes);
     }catch(e){
         console.log(e);
         res.status(500).json('internal server error');

@@ -13,9 +13,9 @@ const CREATE_USERS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.USERS_TABLE}
 const CREATE_POSTS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.POSTS_TABLE}
                            (
                                 id MEDIUMINT NOT NULL AUTO_INCREMENT,
-                                user_id MEDIUMINT NOT NULL,
+                                user_id MEDIUMINT DEFAULT NULL,
                                 post TEXT NOT NULL DEFAULT '',
-                                picture_metadata_id MEDIUMINT NOT NULL DEFAULT 0,
+                                picture_metadata_id MEDIUMINT DEFAULT NULL,
                                 FOREIGN KEY(user_id) REFERENCES ${TABLES.USERS_TABLE}(id),
                                 FOREIGN KEY(picture_metadata_id) REFERENCES ${TABLES.PICTURES_METADATA_TABLE}(id),
                                 PRIMARY KEY (id)
@@ -32,8 +32,8 @@ const CREATE_PICTURES_METADATA_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.PICT
 const CREATE_POSTS_LIKES_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.POSTS_LIKES_TABLE}
                            (
                                id MEDIUMINT NOT NULL AUTO_INCREMENT,
-                               user_id MEDIUMINT NOT NULL DEFAULT 0,
-                               post_id MEDIUMINT NOT NULL DEFAULT 0,
+                               user_id MEDIUMINT DEFAULT NULL,
+                               post_id MEDIUMINT DEFAULT NULL,
                                isLike VARCHAR(5) NOT NULL DEFAULT 'false',
                                FOREIGN KEY(user_id) REFERENCES ${TABLES.USERS_TABLE}(id),
                                FOREIGN KEY(post_id) REFERENCES ${TABLES.POSTS_TABLE}(id),
@@ -43,10 +43,10 @@ const CREATE_POSTS_LIKES_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.POSTS_LIKE
 const CREATE_COMMENTS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.COMMENTS_TABLE}
                            (
                                id MEDIUMINT NOT NULL AUTO_INCREMENT,
-                               user_id MEDIUMINT NOT NULL DEFAULT 0,
-                               post_id MEDIUMINT NOT NULL DEFAULT 0,
+                               user_id MEDIUMINT DEFAULT NULL,
+                               post_id MEDIUMINT DEFAULT NULL,
                                comments TEXT NOT NULL DEFAULT '',
-                               picture_metadata_id MEDIUMINT NOT NULL DEFAULT 0,
+                               picture_metadata_id MEDIUMINT DEFAULT NULL,
                                FOREIGN KEY(user_id) REFERENCES ${TABLES.USERS_TABLE}(id),
                                FOREIGN KEY(post_id) REFERENCES ${TABLES.POSTS_TABLE}(id),
                                FOREIGN KEY(picture_metadata_id) REFERENCES ${TABLES.PICTURES_METADATA_TABLE}(id),

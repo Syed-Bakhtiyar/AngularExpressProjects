@@ -44,8 +44,11 @@ const createUser = (user) => {
     });
 }
 
-const createPosts = async (posts, pictureId)=>{
-    const query = `INSERT INTO ${TABLES.POSTS_TABLE} (user_id, post, picture_metadata_id) VALUES ('${posts.userId}', '${posts.userPost}', ${pictureId})`;
+const createPosts = (posts, pictureId)=>{
+    let query = `INSERT INTO ${TABLES.POSTS_TABLE} (user_id, post) VALUES ('${posts.userId}', '${posts.userPost}')`;
+    if(pictureId){
+        query = `INSERT INTO ${TABLES.POSTS_TABLE} (user_id, post, picture_metadata_id) VALUES ('${posts.userId}', '${posts.userPost}', ${pictureId})`;
+    }
     return new Promise((resolve, reject)=>{
         connection.query(query, (err, rows)=>{
             if(err){
@@ -56,14 +59,13 @@ const createPosts = async (posts, pictureId)=>{
     });
 }
 
-const pictureMetadata = async (picturesMetadata)=>{
-    console.log('picture',pictureMetadata, pictureMetadata.path);
-    const query = `INSERT INTO ${TABLES.PICTURES_METADATA_TABLE} (image_name, image_path) VALUES ('${pictureMetadata.name}', '${pictureMetadata.path}')`;
+const pictureMetadata = (pictures)=>{
+    console.log('picture',pictures, pictures.path);
+    const query = `INSERT INTO ${TABLES.PICTURES_METADATA_TABLE} (image_name, image_path) VALUES ('${pictures.name}', '${pictures.path.replace(/\\/g, '/')}')`;
     return new Promise((resolve, reject)=>{
         connection.query(query, (err, rows)=>{
             if(err){
-                throw err;
-                return;
+                reject(err);
             }
             resolve(rows.insertId);
         });
@@ -71,31 +73,39 @@ const pictureMetadata = async (picturesMetadata)=>{
 }
 // user_id MEDIUMINT NOT NULL DEFAULT 0,
 // post_id
-const postLikes = async (postLikes)=>{
+const postLikes = (postLikes)=>{
     const query =  `DELETE FROM ${TABLES.POSTS_LIKES_TABLE} WHERE user_id = ${postLikes.userId} AND post_id = ${postLikes.postId}`;
-    connection.query(query, (err, result)=>{
-        if(!result.affectedRows){
-            // responseOfLikes = await createLikes(postLikes);
-            return responseOfLikes;
-        }
-    });
+    return new Promise((resolve, reject)=>{
+        connection.query(query, async (err, result)=>{
+            if (err){
+                reject(err);
+            }
+            let responseOfLikes = {};
+            if(!result.affectedRows){
+                responseOfLikes = await createLikes(postLikes);
+            }
+            resolve(responseOfLikes);
+        });
+    })
 }
 
 const createLikes = async (postLikes)=>{
-    const query =  `INSERT INTO ${TABLES.POSTS_LIKES_TABLE} (user_id, post_id) VALUES (${postLikes.userId}, ${postLikes.postId})`;
+    const query =  `INSERT INTO ${TABLES.POSTS_LIKES_TABLE} (user_id, post_id, isLike) VALUES (${postLikes.userId}, ${postLikes.postId}, 'true')`;
     return new Promise((resolve, reject)=>{
         connection.query(query, (err, result)=>{
             if(err){
-                throw err;
-                return
+                reject(err);
             }
             resolve(result);
         });
     });
 }
 
-const postsComment = (comments)=>{
-    const query =  `INSERT INTO ${TABLES.COMMENTS_TABLE} (user_id, post_id, comments, picture_metadata_id) VALUES (${comments.userId}, ${comments.postId}, '${comments.comments}', '${comments.pictureMetadata}')`;
+const postsComment = (comments, pictureId)=>{
+    let query =  `INSERT INTO ${TABLES.COMMENTS_TABLE} (user_id, post_id, comments) VALUES (${comments.userId}, ${comments.postId}, '${comments.comments}')`;
+    if(pictureId){
+        query =  `INSERT INTO ${TABLES.COMMENTS_TABLE} (user_id, post_id, comments, picture_metadata_id) VALUES (${comments.userId}, ${comments.postId}, '${comments.comments}', ${pictureId})`;
+    }
     new Promise((resolve, reject)=>{
         connection.query(query, (err, result)=>{
             if(err){
