@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+form.login-form{
+    background-color: #dbdbdb;
+    position: absolute;
+    box-shadow: 1px 1px 1px 1px gray;   
+    width: 400px;
+    margin: -100px 0 0 -200px;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+}
+form.signUp{
+    background-color: #dbdbdb;
+    position: absolute;
+    
+    width: 400px;
+    margin: -100px 0 0 -200px;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+}
+button:hover,a.button:hover,.form-group,.delete-icon,.icon-delete,.list-group-item {
+    cursor: pointer;
+}
+
+/* .post-user{
+    background-color: #dbdbdb;
+    position: absolute;
+    
+    width: 400px;
+    margin: -100px 0 0 -200px;
+    padding: 10px;
+    top: 10%;
+    left: 50%;
+}
+.btn-comment{
+    background: white;
+    border: solid #dbdbdb;
+    border-radius: 5px;
+    font-size: 18px;
+    height: 100%;
+} */
