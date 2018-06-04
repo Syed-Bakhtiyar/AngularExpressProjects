@@ -33,5 +33,5 @@ app.use('/', commentsRouter);
 app.use('/', likes);
 
 app.listen(3000, ()=>{
-    console.log('api is running');
+    console.log('api is running 3000');
 });

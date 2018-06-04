@@ -1,34 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { UserLoginComponent } from './user-login/user-login.component';
-import { UserSignupComponent } from './user-signup/user-signup.component';
+import { HeaderComponent } from './header/header.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostProductComponent } from './post-product/post-product.component';
-import { OurProductDetailComponent } from './our-product-detail/our-product-detail.component';
-import { AllProductDetailsComponent } from './all-product-details/all-product-details.component';
-import {AppRoutes} from './routers';
+import { PostCreationComponent } from './post.creation/post.creation.component';
+import { SeePostComponent } from './see-post/see-post.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+
+import {routes} from './router.config';
+import { PostDashboardComponent } from './post.dashboard/post.dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserLoginComponent,
-    UserSignupComponent,
+    HeaderComponent,
+    SignupComponent,
+    LoginComponent,
     DashboardComponent,
-    PostProductComponent,
-    OurProductDetailComponent,
-    AllProductDetailsComponent
+    PostCreationComponent,
+    SeePostComponent,
+    PostDashboardComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(
-      AppRoutes,
-      {enableTracing: true}
-    )
+    HttpClientModule,
+    RouterModule,
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

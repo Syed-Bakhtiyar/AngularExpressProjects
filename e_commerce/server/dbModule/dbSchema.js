@@ -6,7 +6,7 @@ const CREATE_USERS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.USERS_TABLE}
                                 first_name VARCHAR(40) NOT NULL,
                                 last_name VARCHAR(40) NOT NULL,
                                 email VARCHAR(100) NOT NULL UNIQUE,
-                                password VARCHAR(30) NOT NULL,
+                                password VARCHAR(100) NOT NULL,
                                 PRIMARY KEY (id)
                            )`;
 
@@ -14,7 +14,7 @@ const CREATE_POSTS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.POSTS_TABLE}
                            (
                                 id MEDIUMINT NOT NULL AUTO_INCREMENT,
                                 user_id MEDIUMINT DEFAULT NULL,
-                                post TEXT NOT NULL DEFAULT '',
+                                post TEXT NOT NULL,
                                 picture_metadata_id MEDIUMINT DEFAULT NULL,
                                 FOREIGN KEY(user_id) REFERENCES ${TABLES.USERS_TABLE}(id),
                                 FOREIGN KEY(picture_metadata_id) REFERENCES ${TABLES.PICTURES_METADATA_TABLE}(id),
@@ -45,7 +45,7 @@ const CREATE_COMMENTS_TABLE = `CREATE TABLE IF NOT EXISTS ${TABLES.COMMENTS_TABL
                                id MEDIUMINT NOT NULL AUTO_INCREMENT,
                                user_id MEDIUMINT DEFAULT NULL,
                                post_id MEDIUMINT DEFAULT NULL,
-                               comments TEXT NOT NULL DEFAULT '',
+                               comments TEXT NOT NULL,
                                picture_metadata_id MEDIUMINT DEFAULT NULL,
                                FOREIGN KEY(user_id) REFERENCES ${TABLES.USERS_TABLE}(id),
                                FOREIGN KEY(post_id) REFERENCES ${TABLES.POSTS_TABLE}(id),

@@ -1,0 +1,23 @@
+<div class="container parent-div">
+    <form>
+      
+      <div class="form-group login-title">
+        SignUp
+      </div>
+      <div class="form-group">
+          <input type="text" placeholder="First Name"  name="userSignUpInterface.firstName" [(ngModel)]="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Last Name" name="password" [(ngModel)]="userSignUpInterface.lastName" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email" name="email" [(ngModel)]="userSignUpInterface.email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password" name="password" [(ngModel)]="userSignUpInterface.password" class="form-control">
+      </div>
+      <button class="btn btn-primary loginButton" type="submit">Sign Up</button>
+    </form>
+  </div>
+  
+  

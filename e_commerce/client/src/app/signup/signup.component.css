@@ -1,0 +1,20 @@
+.parent-div{
+    margin: 10% auto 0 auto;
+    max-width: 35%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: white;
+    -webkit-box-shadow: 0 0 10px #000;
+        box-shadow: 0 0 10px #000;
+}
+
+.loginButton{
+    width: 100%;
+}
+
+.login-title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #007bff;
+}

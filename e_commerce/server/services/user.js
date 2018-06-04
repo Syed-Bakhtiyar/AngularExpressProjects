@@ -14,7 +14,7 @@ module.exports = (connection)=>{
     }
     
     const getUserForAuthentication = (user) => {
-        const query = `SELECT * FROM ${TABLES.USERS_TABLE} WHERE email = '${user.email}' AND password = '${user.password}'`;
+        const query = `SELECT * FROM ${TABLES.USERS_TABLE} WHERE email = '${user.email}'`;
         return new Promise((resolve, reject) => {
             connection.query(query, (err, rows) => {
                 if(err){
