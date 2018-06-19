@@ -10,9 +10,9 @@
     <div class="form-group">
       <input type="password" placeholder="Password"  name="password" [(ngModel)]="userAuthentication.password" class="form-control">
     </div>
-    <button class="btn btn-primary loginButton" type="submit">Login</button>
+    <button class="btn btn-primary loginButton" type="submit" (click)="authenticateUser()">Login</button>
     <div class="parent-of-signup-link">
-      <a class="anchor" routerLink='/dashboard'>Create Account?</a>
+      <a class="anchor" routerLink='/signup'>Create Account?</a>
     </div>
   </form>
 </div>

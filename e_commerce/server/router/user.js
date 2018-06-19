@@ -10,6 +10,7 @@ module.exports = () => {
 
     router.post('/createUser', async (req, res)=>{
         try{
+            console.log(req.body);
             req.body.password = await passwordSecurity.encryptPassword(req.body.password);
             responseOfUser = await handleUser.createUser(req.body);
             return res.json(responseOfUser);
@@ -24,9 +25,12 @@ module.exports = () => {
 
     router.post('/authenticate', async (req, res)=>{
         try{
+            console.log(req.body);
             const responseOfAuthenticatedUsers = await handleUser.getUserForAuthentication(req.body);
+            console.log(responseOfAuthenticatedUsers, responseOfAuthenticatedUsers.length);
             if(responseOfAuthenticatedUsers.length){
                 const checkPassword = await passwordSecurity.decryptPassword(req.body.password, responseOfAuthenticatedUsers[0].password);
+                console.log(checkPassword);
                 if(!checkPassword){
                     return sendErrorResponseWithMessage(res, 401, 'Not Authenticated User');
                 }
@@ -54,6 +58,6 @@ module.exports = () => {
             console.log(e);
             return sendErrorResponseWithMessage(res, 500, 'internal server error');
         }
-    })
+    });
     return router;
 }

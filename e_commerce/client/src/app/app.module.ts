@@ -14,6 +14,16 @@ import { CookieService } from 'ngx-cookie-service';
 
 import {routes} from './router.config';
 import { PostDashboardComponent } from './post.dashboard/post.dashboard.component';
+import { CreateUserService } from './shared/services/create-user.service';
+import { Http, HttpModule } from '@angular/http';
+import { SweetAlertService } from './shared/services/sweet-alert.service';
+import { UserAuthenticationService } from './shared/services/user.authentication.service';
+import { CookieServicesService } from './shared/services/cookie-services.service';
+// import {
+//   ToastrModule,
+//   ToastNoAnimation,
+//   ToastNoAnimationModule,
+// } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -31,9 +41,16 @@ import { PostDashboardComponent } from './post.dashboard/post.dashboard.componen
     HttpClientModule,
     RouterModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [CookieService],
+  providers: [
+    CookieServicesService,
+    UserAuthenticationService,
+    CookieService,
+    CreateUserService,
+    SweetAlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
