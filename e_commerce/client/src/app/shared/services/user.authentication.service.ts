@@ -9,33 +9,40 @@ import {
 import {BASE_URL} from '../../variable';
 import { RequestOptionsArgs, Headers } from '@angular/http';
 import { CookieServicesService } from './cookie-services.service';
+import { SignUpInterface } from '../interfaces/userSignUpInterface';
 
 @Injectable()
 export class UserAuthenticationService {
 
-
-  constructor(private http: HttpClient, private cookieService: CookieServicesService) { }
+  private user: SignUpInterface;
+  constructor(private http: HttpClient,
+              private cookieService: CookieServicesService) { }
 
   async authenticateUser(user: UserAuthenticationInterface) {
-    const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this.http.post( `${BASE_URL}authenticate`, user, httpOptions).toPromise();
+    return this.http.post( `${BASE_URL}authenticate`, user, this.addAuthHeader()).toPromise();
   }
 
-  addAuthHeader(args: RequestOptionsArgs = {}): RequestOptionsArgs {
-    if (!args.headers) {
-      args.headers = new Headers();
-    }
+  async isUserAuthorized(): Promise<any> {
+    return this.http.post(`${BASE_URL}authenticateToken`, null, this.addAuthHeader()).toPromise();
+  }
 
-    if (this.cookieService.getAuthToken) {
-      args.headers.set( 'Authorization', this.cookieService.getAuthToken() );
-      return args;
-    }
+  addAuthHeader(): any {
+    // headers.append('Content-Type', 'multipart/form-data');
+    //     headers.append('Accept', 'application/json');
+    // ; boundary="-------314159265358979323846"
+    const httpHeaderOptions = {
+      headers: new HttpHeaders({
+        'authorization': this.cookieService.getAuthToken()
+      })
+    };
+    return httpHeaderOptions;
+  }
 
-    return args;
+  setUser(user: SignUpInterface) {
+    this.user = user;
+  }
+
+  getUser(): SignUpInterface {
+    return this.user;
   }
 }

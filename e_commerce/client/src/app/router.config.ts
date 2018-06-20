@@ -15,16 +15,15 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard', component: DashboardComponent,
-        children:[
+        children: [
             {
-                path:'',
+                path: '',
                 component: PostDashboardComponent,
                 children: [
                     {path: '', component: PostCreationComponent},
                     {path: 'see', component: SeePostComponent}
                 ]
             },
-                
         ]
     }
 ]

@@ -19,6 +19,7 @@ import { Http, HttpModule } from '@angular/http';
 import { SweetAlertService } from './shared/services/sweet-alert.service';
 import { UserAuthenticationService } from './shared/services/user.authentication.service';
 import { CookieServicesService } from './shared/services/cookie-services.service';
+import { PostServiceService } from './shared/services/post-service.service';
 // import {
 //   ToastrModule,
 //   ToastNoAnimation,
@@ -49,7 +50,8 @@ import { CookieServicesService } from './shared/services/cookie-services.service
     UserAuthenticationService,
     CookieService,
     CreateUserService,
-    SweetAlertService
+    SweetAlertService,
+    PostServiceService
   ],
   bootstrap: [AppComponent]
 })
